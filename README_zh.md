@@ -343,39 +343,7 @@ DeerFlow 支持 LangSmith 追踪功能，帮助您调试和监控工作流。要
 
 这将在 LangGraph Studio 中启用追踪可视化，并将您的追踪发送到 LangSmith 进行监控和分析。
 
-## Docker
 
-您也可以使用 Docker 运行此项目。
-
-首先，您需要阅读下面的[配置](#配置)部分。确保`.env`和`.conf.yaml`文件已准备就绪。
-
-其次，构建您自己的 Web 服务器 Docker 镜像：
-
-```bash
-docker build -t deer-flow-api .
-```
-
-最后，启动运行 Web 服务器的 Docker 容器：
-
-```bash
-# 将deer-flow-api-app替换为您首选的容器名称
-docker run -d -t -p 8000:8000 --env-file .env --name deer-flow-api-app deer-flow-api
-
-# 停止服务器
-docker stop deer-flow-api-app
-```
-
-### Docker Compose
-
-您也可以使用 docker compose 设置此项目：
-
-```bash
-# 构建docker镜像
-docker compose build
-
-# 启动服务器
-docker compose up
-```
 
 ## 文本转语音集成
 

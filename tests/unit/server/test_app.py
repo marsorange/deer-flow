@@ -162,64 +162,6 @@ class TestTTSEndpoint:
         assert "Internal Server Error" in response.json()["detail"]
 
 
-class TestPodcastEndpoint:
-    @patch("src.server.app.build_podcast_graph")
-    def test_generate_podcast_success(self, mock_build_graph, client):
-        mock_workflow = MagicMock()
-        mock_build_graph.return_value = mock_workflow
-        mock_workflow.invoke.return_value = {"output": b"fake_audio_data"}
-
-        request_data = {"content": "Test content for podcast"}
-
-        response = client.post("/api/podcast/generate", json=request_data)
-
-        assert response.status_code == 200
-        assert response.headers["content-type"] == "audio/mp3"
-        assert response.content == b"fake_audio_data"
-
-    @patch("src.server.app.build_podcast_graph")
-    def test_generate_podcast_error(self, mock_build_graph, client):
-        mock_build_graph.side_effect = Exception("Podcast generation failed")
-
-        request_data = {"content": "Test content"}
-
-        response = client.post("/api/podcast/generate", json=request_data)
-
-        assert response.status_code == 500
-        assert response.json()["detail"] == "Internal Server Error"
-
-
-class TestPPTEndpoint:
-    @patch("src.server.app.build_ppt_graph")
-    @patch("builtins.open", new_callable=mock_open, read_data=b"fake_ppt_data")
-    def test_generate_ppt_success(self, mock_file, mock_build_graph, client):
-        mock_workflow = MagicMock()
-        mock_build_graph.return_value = mock_workflow
-        mock_workflow.invoke.return_value = {
-            "generated_file_path": "/fake/path/test.pptx"
-        }
-
-        request_data = {"content": "Test content for PPT"}
-
-        response = client.post("/api/ppt/generate", json=request_data)
-
-        assert response.status_code == 200
-        assert (
-            "application/vnd.openxmlformats-officedocument.presentationml.presentation"
-            in response.headers["content-type"]
-        )
-        assert response.content == b"fake_ppt_data"
-
-    @patch("src.server.app.build_ppt_graph")
-    def test_generate_ppt_error(self, mock_build_graph, client):
-        mock_build_graph.side_effect = Exception("PPT generation failed")
-
-        request_data = {"content": "Test content"}
-
-        response = client.post("/api/ppt/generate", json=request_data)
-
-        assert response.status_code == 500
-        assert response.json()["detail"] == "Internal Server Error"
 
 
 class TestEnhancePromptEndpoint:

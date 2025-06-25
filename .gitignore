@@ -26,3 +26,9 @@ conf.yaml
 # coverage report
 coverage.xml
 coverage/
+
+# Uploaded files (user data protection)
+uploads/
+*.xlsx
+*.xls
+*.csv

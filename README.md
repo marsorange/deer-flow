@@ -45,7 +45,7 @@ In this demo, we showcase how to use DeerFlow to:
 - [🌟 Features](#features)
 - [🏗️ Architecture](#architecture)
 - [🛠️ Development](#development)
-- [🐳 Docker](#docker)
+
 - [🗣️ Text-to-Speech Integration](#text-to-speech-integration)
 - [📚 Examples](#examples)
 - [❓ FAQ](#faq)
@@ -382,39 +382,7 @@ DeerFlow supports LangSmith tracing to help you debug and monitor your workflows
 
 This will enable trace visualization in LangGraph Studio and send your traces to LangSmith for monitoring and analysis.
 
-## Docker
 
-You can also run this project with Docker.
-
-First, you need read the [configuration](docs/configuration_guide.md) below. Make sure `.env`, `.conf.yaml` files are ready.
-
-Second, to build a Docker image of your own web server:
-
-```bash
-docker build -t deer-flow-api .
-```
-
-Final, start up a docker container running the web server:
-
-```bash
-# Replace deer-flow-api-app with your preferred container name
-docker run -d -t -p 8000:8000 --env-file .env --name deer-flow-api-app deer-flow-api
-
-# stop the server
-docker stop deer-flow-api-app
-```
-
-### Docker Compose (include both backend and frontend)
-
-DeerFlow provides a docker-compose setup to easily run both the backend and frontend together:
-
-```bash
-# building docker image
-docker compose build
-
-# start the server
-docker compose up
-```
 
 ## Examples
 
